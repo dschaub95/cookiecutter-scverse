@@ -70,17 +70,17 @@ hatch env show -i
 This will list “Standalone” environments and a table of “Matrix” environments like the following:
 
 ```
-+------------+---------+--------------------------+----------+---------------------------------+-------------+
-| Name       | Type    | Envs                     | Features | Dependencies                    | Scripts     |
-+------------+---------+--------------------------+----------+---------------------------------+-------------+
-| hatch-test | virtual | hatch-test.py3.12-stable | dev      | coverage-enable-subprocess==1.0 | cov-combine |
-|            |         | hatch-test.py3.14-stable | test     | coverage[toml]~=7.4             | cov-report  |
-|            |         | hatch-test.py3.14-pre    |          | pytest-mock~=3.12               | run         |
-|            |         |                          |          | pytest-randomly~=3.15           | run-cov     |
-|            |         |                          |          | pytest-rerunfailures~=14.0      |             |
-|            |         |                          |          | pytest-xdist[psutil]~=3.5       |             |
-|            |         |                          |          | pytest~=8.1                     |             |
-+------------+---------+--------------------------+----------+---------------------------------+-------------+
++------------+---------+--------------------------+---------------------------------+-------------+
+| Name       | Type    | Envs                     | Dependencies                    | Scripts     |
++============+=========+==========================+=================================+=============+
+| hatch-test | virtual | hatch-test.py3.12-stable | coverage-enable-subprocess==1.0 | cov-combine |
+|            |         | hatch-test.py3.14-stable | coverage[toml]~=7.11            | cov-report  |
+|            |         | hatch-test.py3.14-pre    | pytest-mock~=3.12               | run         |
+|            |         |                          | pytest-randomly~=3.15           | run-cov     |
+|            |         |                          | pytest-rerunfailures~=14.0      |             |
+|            |         |                          | pytest-xdist[psutil]~=3.5       |             |
+|            |         |                          | pytest~=9.0                     |             |
++------------+---------+--------------------------+---------------------------------+-------------+
 ```
 
 From the `Envs` column, select the environment name you want to use for development.
@@ -117,7 +117,7 @@ only because an outdated sphinx plugin pins an older version.
 To initialize a virtual environment in the `.venv` directory of your project, simply run
 
 ```bash
-uv sync --all-extras
+uv sync --all-groups
 ```
 
 The `.venv` directory is typically automatically discovered by IDEs such as VS Code.
@@ -134,7 +134,7 @@ we describe how you can manage environments manually using `pip`:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev,test,doc]"
+pip install -e . --group dev --group test --group doc  # --group needs pip >= 25.1
 ```
 
 The `.venv` directory is typically automatically discovered by IDEs such as VS Code.
@@ -270,7 +270,7 @@ Please write documentation for new or changed features and use-cases.
 This project uses [sphinx][] with the following features:
 
 - The [myst][] extension allows to write documentation in markdown/Markedly Structured Text
-- [Numpy-style docstrings][numpydoc] (through the [napoloen][numpydoc-napoleon] extension).
+- [Numpy-style docstrings][numpydoc] (through the [napoleon][numpydoc-napoleon] extension).
 - Jupyter notebooks as tutorials through [myst-nb][] (See [Tutorials with myst-nb](#tutorials-with-myst-nb-and-jupyter-notebooks))
 - [sphinx-autodoc-typehints][], to automatically reference annotated input and output types
 - Citations (like {cite:p}`Virshup_2023`) can be included with [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/)

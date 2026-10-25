@@ -6,7 +6,6 @@
 
 # -- Path setup --------------------------------------------------------------
 import shutil
-import sys
 from datetime import datetime
 from importlib.metadata import metadata
 from pathlib import Path
@@ -14,7 +13,6 @@ from pathlib import Path
 from sphinxcontrib import katex
 
 HERE = Path(__file__).parent
-sys.path.insert(0, str(HERE / "extensions"))
 
 
 # -- Project information -----------------------------------------------------
@@ -63,7 +61,6 @@ extensions = [
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinxext.opengraph",
     "scverse_misc.sphinx_ext",
-    *[p.stem for p in (HERE / "extensions").glob("*.py")],
 ]
 
 autosummary_generate = True
